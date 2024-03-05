@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	
+	<flow name="get-employees-interface-flow" doc:id="23cbd5af-e6c3-464e-864d-32cde1a78443" >
+		<http:listener doc:name="Listener" doc:id="098a0c96-f671-4359-bf8c-c8d666146ee4" config-ref="HTTP_Listener_config" path="/employees"/>
+		<set-variable value="#[attributes.headers.'x-correlation-id']" doc:name="Set Transaction Id" doc:id="78da8d4e-d5dc-49fe-a3af-1f33f16b9041" variableName="transactionId"/>
+		<logger level="INFO" doc:name="LOG Input Request" doc:id="9180de7a-f738-4e71-9b38-f8c7e315466d" message='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;	"TransactionTime" : now(),&#10;	"FlowName" :flow.name,&#10;	"Data": attributes.queryParams.inputDate,&#10;	"TransactionId" : vars.transactionId&#10;}]'/>
+		<flow-ref doc:name="Refer to get-employees-implementation-subflow" doc:id="298a5c35-4c25-4c48-a768-87f77d2e79cc" name="get-employees-implementation-subflow"/>
+		<logger level="INFO" doc:name="LOG Employee Response from Database" doc:id="ccc1f03d-a079-40d2-95fc-7d059beba9f4" message='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;	"TransactionTime" : now(),&#10;	"FlowName" :flow.name,&#10;	"Data": payload,&#10;	"TransactionId" : vars.transactionId&#10;}]'/>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="94c69d7d-6ba9-4bc2-b3e5-83bb689d3538" type="ANY">
+				<logger level="ERROR" doc:name="LOG ERROR in case of failure" doc:id="cc543b2e-cfc0-44bc-9cf6-c986380261e3" message="#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;	&quot;TransactionTime&quot; : now(),&#10;	&quot;FlowName&quot; :flow.name,&#10;	&quot;Code&quot;: error.errorType,&#10;	&quot;Message&quot;: error.detailedDescription,&#10;	&quot;TransactionId&quot; : attributes.headers.'x-correlation-id'&#10;}]"/>
+			</on-error-propagate>
+		</error-handler>
+	</flow>
+</mule>
