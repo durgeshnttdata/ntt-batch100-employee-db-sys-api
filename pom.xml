@@ -10,7 +10,14 @@
 	<packaging>mule-application</packaging>
 
 	<name>ntt-batch100-employee-db-sys-api</name>
-
+	<distributionManagement>
+		<repository>
+			<id>anypoint-exchange-v3</id>
+			<name>Anypoint Exchange</name>
+			<url>https://maven.anypoint.mulesoft.com/api/v3/organizations/e7baa2be-732f-4cab-98da-3d9112e81338/maven</url>
+			<layout>default</layout>
+		</repository>
+	</distributionManagement>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
