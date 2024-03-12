@@ -52,7 +52,7 @@
 						<target>Cloudhub-US-East-2</target>
 						<muleVersion>4.4.0</muleVersion>
 						<server>anypoint-exchange-v3</server>
-						<applicationName>${project.name}</applicationName>
+						<applicationName>dev-${project.name}</applicationName>
 						<replicas>1</replicas>
 						<vCores>0.1</vCores>
 						<properties>
@@ -61,9 +61,6 @@
 							<anypoint.platform.config.analytics.agent.enabled>true</anypoint.platform.config.analytics.agent.enabled>
 							<db.username>sql5682887</db.username>
 						</properties>
-						<secureProperties>
-							<db.password>38eefdebf3324ef6a51933f5d3eaf67b</db.password>
-						</secureProperties>
 						<deploymentSettings>
 							<lastMileSecurity>false</lastMileSecurity>
 							<forwardSslSession>false</forwardSslSession>
