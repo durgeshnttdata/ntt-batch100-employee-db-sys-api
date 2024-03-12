@@ -1,5 +1,7 @@
 http:
  port: "8081"
+ attempt: "2"
+ interval: "5000"
  
 db:
  host: "sql5.freesqldatabase.com"
@@ -7,3 +9,5 @@ db:
  username: "sql5682887"
  password: "![FjM02UWL8R7OgixfurQMyQ==]"
  database: "sql5682887"
+ attempt: "2"
+ interval: "10000"

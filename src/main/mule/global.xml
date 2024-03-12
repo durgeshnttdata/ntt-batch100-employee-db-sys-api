@@ -12,7 +12,11 @@ http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/sc
 		<http:listener-connection host="0.0.0.0" port="${http.port}" />
 	</http:listener-config>
 	<db:config name="Database_Config" doc:name="Database Config" doc:id="af91c879-88b1-40a9-9307-cfa9d438a083" >
-		<db:my-sql-connection host="${db.host}" port="${db.port}" user="${db.username}" password="${secure::db.password}" database="${db.database}" />
+		<db:my-sql-connection host="${db.host}" port="${db.port}" user="${db.username}" password="${secure::db.password}" database="${db.database}" >
+			<reconnection >
+				<reconnect frequency="5000" />
+			</reconnection>
+		</db:my-sql-connection>
 	</db:config>
 	<configuration-properties doc:name="Configuration properties" doc:id="535948f2-5eaa-44ec-9379-683cfe857c1d" file="${env}-config.yaml" />
 	<global-property doc:name="Global Property" doc:id="e0496971-ddb8-4444-a5af-45a22f33d638" name="apikey" value="encryptKey123" />

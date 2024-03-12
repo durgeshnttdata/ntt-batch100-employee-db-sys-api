@@ -21,7 +21,9 @@ output application/java
 			</ee:message>
 		</ee:transform>
 		<db:select doc:name="Fetch employees data" doc:id="8ad95c22-4805-409a-ad82-24604f3ecfbe" config-ref="Database_Config">
+			<reconnect frequency="${db.interval}" count="${db.attempt}"/>
 			<db:sql ><![CDATA[select * from employee_master where timestamp>:input]]></db:sql>
+			<db:parameter-types />
 			<db:input-parameters ><![CDATA[#[payload]]]></db:input-parameters>
 		</db:select>
 		<ee:transform doc:name="DW Transform Database response to JSON format" doc:id="9ab52478-48c4-48df-8a7d-b1cd588f388e" >
